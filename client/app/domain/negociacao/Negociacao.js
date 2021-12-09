@@ -1,23 +1,26 @@
 class Negociacao {
     constructor(data, quantidade, valor){
-        this._data = data; // data atual
+        // underline é convenção para evitar q esses dados sejam alterados
+        this._data = new Date(data.getTime()); // data atual
         this._quantidade = quantidade;
         this._valor = valor;
+
+        Object.freeze(this);
     }
 
-    getVolume(){
+    get volume(){
         return this._quantidade * this._valor;
     }
 
-    getData(){
+    get data(){
         return this._data;
     }
 
-    getQuantidade(){
+    get quantidade(){
         return this._quantidade;
     }
 
-    getValor(){
+    get valor(){
         return this._valor;
     }
 }
