@@ -1,8 +1,7 @@
 class Negociacoes {
-    constructor(contexto, armadilha){
+    constructor(armadilha){
         this._negociacoes = [];
         this._armadilha = armadilha; // para atualização da view
-        this._contexto = contexto; // armazena o this da instância (controller)
 
         Object.freeze(this);
     }
@@ -10,13 +9,13 @@ class Negociacoes {
     adiciona(negociacao){
         this._negociacoes.push(negociacao);
 
-        this._armadilha.call(this._contexto, this);
+        this._armadilha(this);
     }
 
     esvazia(){
         this._negociacoes.length = 0;
 
-        this._armadilha.call(this._contexto, this);
+        this._armadilha(this);
     }
 
     paraArray(){
