@@ -15,13 +15,23 @@ class NegociacaoController {
         'texto');
     }
     adiciona(event){
-        event.preventDefault();
+        try {
+            event.preventDefault();
 
-        this._negociacoes.adiciona(this._criaNegociacao());
+            this._negociacoes.adiciona(this._criaNegociacao());
 
-        this._mensagem.texto = "Negociação adicionada com sucesso!";
+            this._mensagem.texto = "Negociação adicionada com sucesso!";
 
-        this._limpaFormulario();
+            this._limpaFormulario();
+        }catch(err){
+            console.log(err);
+
+            if(err instanceof DataInvalidaException){
+                this._mensagem.texto = err.message;
+            }else {
+                this._mensagem.texto = 'Um erro inesperado aconteceu. Entre em contato com o suporte';
+            }
+        }
     }
 
     _criaNegociacao(){
