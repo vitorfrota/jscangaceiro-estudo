@@ -1,11 +1,15 @@
 const controller = new NegociacaoController();
 
+const $ = document.querySelector.bind(document);
+
 // salvar negociação
-document
-.querySelector('.form')
+$('.form')
 .addEventListener('submit', controller.adiciona.bind(controller));
 
 // apagar lista de negociações
-document
-.querySelector('#botao-apaga')
+$('#botao-apaga')
 .addEventListener('click', controller.apaga.bind(controller));
+
+// importa negociacoes de fomra assíncrona
+$('#botao-importa')
+.addEventListener('click', controller.importaNegociacoes.bind(controller));
