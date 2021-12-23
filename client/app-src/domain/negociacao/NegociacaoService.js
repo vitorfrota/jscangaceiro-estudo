@@ -1,5 +1,5 @@
-import { HttpService, ApplicationException } from '../../util/index.js'; 
-import { Negociacao } from './Negociacao.js';
+import { HttpService, ApplicationException } from '../../util'; 
+import { Negociacao } from './Negociacao';
 
 const URL = 'http://localhost:3000/';
 

@@ -1,29 +1,18 @@
-import { Negociacoes, NegociacaoService, Negociacao } from '../domain/index.js';
-import { 
-    NegociacoesView,
-    MensagemView, 
-    Mensagem, 
-    DateConverter 
-} from '../ui/index.js';
+import { Negociacoes, Negociacao } from '../domain';
+import { NegociacoesView, MensagemView, Mensagem, DateConverter } from '../ui';
 
 import { 
-    getNegociacaoDao, 
+getNegociacaoDao, 
     Bind, 
     getExceptionMessage, 
     debounce, 
     bindEvent,
-    controller,
-    obrigatorio
-} from '../util/index.js';
+    controller
+} from '../util';
 
 @controller('#data', '#quantidade', '#valor')
 export class NegociacaoController {
-    constructor(
-        _inputData = obrigatorio('data'), 
-        _inputQuantidade = obrigatorio('quantidade'), 
-        _inputValor = obrigatorio('valor')
-        ){
-        
+    constructor(_inputData, _inputQuantidade, _inputValor){  
         Object.assign(this, { _inputData, _inputQuantidade, _inputValor });
 
         this._negociacoes = new Bind(new Negociacoes(), 
@@ -34,7 +23,6 @@ export class NegociacaoController {
         new MensagemView('#mensagemView'), 
         'texto');
 
-        this._service = new NegociacaoService();
         this._init();
     }
 
@@ -85,7 +73,8 @@ export class NegociacaoController {
             this._mensagem.texto = getExceptionMessage(err);
         }
     }
-
+    
+    @bindEvent('click', '#botao-apaga')
     async apaga(){
         try {
             const dao = await getNegociacaoDao();
@@ -103,7 +92,10 @@ export class NegociacaoController {
     @debounce()
     async importaNegociacoes(){
         try {
-            const negociacoes = await this._service.obterNegociacoesDoPeriodo();
+            const { NegociacaoService } = await import('../domain/negociacao/NegociacaoService');
+            const service = new NegociacaoService();
+            
+            const negociacoes = await service.obterNegociacoesDoPeriodo();
 
             negociacoes.filter(novaNegociacao => !this._negociacoes
                 .paraArray()
