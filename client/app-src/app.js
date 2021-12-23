@@ -1,5 +1,4 @@
 import { NegociacaoController } from './controllers/NegociacaoController.js';
-import { debounce } from './util/index.js';
 
 const controller = new NegociacaoController();
 
@@ -15,4 +14,4 @@ $('#botao-apaga')
 
 // importa negociacoes de fomra assíncrona
 $('#botao-importa')
-.addEventListener('click', debounce(()=> controller.importaNegociacoes(), 1000));
+.addEventListener('click', controller.importaNegociacoes.bind(controller));

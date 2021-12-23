@@ -1,12 +1,10 @@
-System.register(['./controllers/NegociacaoController.js', './util/index.js'], function (_export, _context) {
+System.register(['./controllers/NegociacaoController.js'], function (_export, _context) {
   "use strict";
 
-  var NegociacaoController, debounce;
+  var NegociacaoController;
   return {
     setters: [function (_controllersNegociacaoControllerJs) {
       NegociacaoController = _controllersNegociacaoControllerJs.NegociacaoController;
-    }, function (_utilIndexJs) {
-      debounce = _utilIndexJs.debounce;
     }],
     execute: function () {
 
@@ -21,7 +19,7 @@ System.register(['./controllers/NegociacaoController.js', './util/index.js'], fu
       $('#botao-apaga').addEventListener('click', controller.apaga.bind(controller));
 
       // importa negociacoes de fomra assíncrona
-      $('#botao-importa').addEventListener('click', debounce(() => controller.importaNegociacoes(), 1000));
+      $('#botao-importa').addEventListener('click', controller.importaNegociacoes.bind(controller));
     }
   };
 });

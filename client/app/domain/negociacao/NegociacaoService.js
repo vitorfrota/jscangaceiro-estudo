@@ -41,7 +41,7 @@ System.register(['../../util/index.js', './Negociacao.js'], function (_export, _
 
             const URL = 'http://localhost:3000/';
 
-            class NegociacaoService {
+            let NegociacaoService = class NegociacaoService {
                 constructor() {
                     this._http = new HttpService();
                 }
@@ -81,7 +81,7 @@ System.register(['../../util/index.js', './Negociacao.js'], function (_export, _
                         }
                     })();
                 }
-            }
+            };
 
             _export('NegociacaoService', NegociacaoService);
         }
