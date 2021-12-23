@@ -6,11 +6,23 @@ import {
     DateConverter 
 } from '../ui/index.js';
 
-import { getNegociacaoDao, Bind, getExceptionMessage, debounce, controller } from '../util/index.js';
+import { 
+    getNegociacaoDao, 
+    Bind, 
+    getExceptionMessage, 
+    debounce, 
+    bindEvent,
+    controller,
+    obrigatorio
+} from '../util/index.js';
 
 @controller('#data', '#quantidade', '#valor')
 export class NegociacaoController {
-    constructor(_inputData, _inputQuantidade, _inputValor){
+    constructor(
+        _inputData = obrigatorio('data'), 
+        _inputQuantidade = obrigatorio('quantidade'), 
+        _inputValor = obrigatorio('valor')
+        ){
         
         Object.assign(this, { _inputData, _inputQuantidade, _inputValor });
 
@@ -52,6 +64,8 @@ export class NegociacaoController {
         this._inputData.focus();
     }
 
+    @bindEvent('submit', '.form')
+    @debounce()
     async adiciona(event){
         try {
             event.preventDefault();
@@ -84,7 +98,8 @@ export class NegociacaoController {
             this._mensagem.texto = getExceptionMessage(err);
         }
     }
-
+    
+    @bindEvent('click', '#botao-importa')
     @debounce()
     async importaNegociacoes(){
         try {

@@ -8,17 +8,29 @@ System.register([], function (_export, _context) {
             const constructorOriginal = constructor;
 
             const constructorNovo = function () {
+                const instance = new constructorOriginal(...elementos);
 
-                return new constructorOriginal(...elementos);
+                Object.getOwnPropertyNames(constructorOriginal.prototype).forEach(property => {
+                    if (Reflect.hasMetadata('bindEvent', instance, property)) {
+                        associaEvento(instance, Reflect.getMetadata('bindEvent', instance, property));
+                    }
+                });
             };
 
             constructorNovo.prototype = constructorOriginal.prototype;
 
             return constructorNovo;
         };
+
+        function associaEvento(instance, metadado) {
+            document.querySelector(metadado.selector).addEventListener(metadado.event, event => {
+                if (metadado.prevent) event.preventDefault();
+                instance[metadado.propertyKey](event);
+            });
+        }
     }
 
-    _export("controller", controller);
+    _export('controller', controller);
 
     return {
         setters: [],
