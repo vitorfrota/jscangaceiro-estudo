@@ -1,10 +1,10 @@
 export class View{
-    constructor(seletor){
-        this._elemento = document.querySelector(seletor);
+    constructor(selector){
+        this._element = document.querySelector(selector);
     }
 
     update(model){
-        this._elemento.innerHTML = this.template(model);
+        this._element.innerHTML = this.template(model);
     }
 
     template(model){

@@ -1,17 +1,17 @@
-import { Negociacao } from './Negociacao';
+import { Negotiation } from './Negotiation';
 
-export class NegociacaoDao {
+export class NegotiationDao {
     constructor(connection){
         this._connection = connection;
         this._store = 'negociacoes';
     }
 
-    adiciona(negociacao){
+    add(negotiation){
         return new Promise((resolve, reject)=> {
             const request = this._connection
             .transaction([this._store], 'readwrite')
             .objectStore(this._store)
-            .add(negociacao);
+            .add(negotiation);
 
             request.onsuccess = _ => resolve();
 
@@ -23,7 +23,7 @@ export class NegociacaoDao {
         });
     }
 
-    apagaTodos(){
+    clearAll(){
         return new Promise((resolve, reject)=> {
             const request = this._connection
             .transaction([this._store], 'readwrite')
@@ -40,9 +40,9 @@ export class NegociacaoDao {
         });
     }
 
-    listaTodos(){
+    list(){
         return new Promise((resolve, reject)=> {
-            const negociacoes = [];
+            const negotiations = [];
 
             const cursor = this._connection
             .transaction([this._store], 'readwrite')
@@ -50,19 +50,19 @@ export class NegociacaoDao {
             .openCursor();
 
             cursor.onsuccess = e => {
-                const atual = e.target.result;
+                const current = e.target.result;
 
-                if(atual){
-                    const negociacao = new Negociacao(
-                        atual.value._data,
-                        atual.value._quantidade,
-                        atual.value._valor);
+                if(current){
+                    const negotiation = new Negotiation(
+                        current.value._createdAt,
+                        current.value._quantity,
+                        current.value._amount);
                     
-                        negociacoes.push(negociacao);
+                        negotiations.push(negotiation);
 
-                        atual.continue();
+                        current.continue();
                 } else {
-                    resolve(negociacoes);
+                    resolve(negotiations);
                 }
 
                 cursor.onerror = e => {

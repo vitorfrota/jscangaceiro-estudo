@@ -1,12 +1,11 @@
-import { obrigatorio } from '../../util';
+import { isRequired } from '../../util';
 
 export function bindEvent(
-    event = obrigatorio('event'), 
-    selector = obrigatorio('selector'), 
+    event = isRequired('event'), 
+    selector = isRequired('selector'), 
     prevent = true) {
     
     return function(target, propertyKey, descriptor) {
-
         Reflect.defineMetadata(
             'bindEvent', 
             { event, selector, prevent, propertyKey }, 

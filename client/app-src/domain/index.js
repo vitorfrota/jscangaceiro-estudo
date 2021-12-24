@@ -1,3 +1,3 @@
-export * from './negociacao/Negociacao.js';
-export * from './negociacao/NegociacaoDao.js';
-export * from './negociacao/Negociacoes.js';
+export * from './negotiation/Negotiation';
+export * from './negotiation/NegotiationDao';
+export * from './negotiation/Negotiations';

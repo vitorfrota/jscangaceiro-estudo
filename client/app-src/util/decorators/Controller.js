@@ -1,18 +1,18 @@
-export function controller(...seletores){
-    const elementos = seletores
-                        .map(seletor => document.querySelector(seletor));
+export function controller(...selectors){
+    const elements = selectors
+                        .map(selector => document.querySelector(selector));
 
     return function(constructor){
-        const constructorOriginal = constructor;
+        const currentConstructor = constructor;
 
-        const constructorNovo = function(){
-            const instance = new constructorOriginal(...elementos);
+        const newConstructor = function(){
+            const instance = new currentConstructor(...elements);
 
             Object
-            .getOwnPropertyNames(constructorOriginal.prototype)
+            .getOwnPropertyNames(currentConstructor.prototype)
             .forEach(property => {
                 if(Reflect.hasMetadata('bindEvent', instance, property)){
-                    associaEvento(
+                    associateEvent(
                         instance, 
                         Reflect.getMetadata('bindEvent', instance, property)
                     )
@@ -20,16 +20,16 @@ export function controller(...seletores){
             })
         }
 
-        constructorNovo.prototype = constructorOriginal.prototype;
+        newConstructor.prototype = currentConstructor.prototype;
 
-        return constructorNovo;
+        return newConstructor;
     }
 
-    function associaEvento(instance, metadado){
-        document.querySelector(metadado.selector)
-        .addEventListener(metadado.event, event => {
-            if(metadado.prevent) event.preventDefault();
-            instance[metadado.propertyKey](event);
+    function associateEvent(instance, metadata){
+        document.querySelector(metadata.selector)
+        .addEventListener(metadata.event, event => {
+            if(metadata.prevent) event.preventDefault();
+            instance[metadata.propertyKey](event);
         })
     }
 }

@@ -1,4 +1,4 @@
-export * from './views/MensagemView.js';
-export * from './views/NegociacoesView.js';
-export * from './models/Mensagem.js';
+export * from './views/MessageView.js';
+export * from './views/NegotiationsView.js';
+export * from './models/Message.js';
 export * from './converters/DateConverter.js';

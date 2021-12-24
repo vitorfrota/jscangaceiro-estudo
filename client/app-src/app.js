@@ -2,6 +2,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'bootstrap/js/modal';
 
-import { NegociacaoController } from './controllers/NegociacaoController';
+import { NegotiationController } from './controllers/NegotiationController';
 
-const controller = new NegociacaoController();
+const controller = new NegotiationController();

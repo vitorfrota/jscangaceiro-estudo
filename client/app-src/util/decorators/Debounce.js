@@ -1,6 +1,6 @@
 export function debounce(ms = 500){
     return function (target, key, descriptor){
-        const metodoOriginal = descriptor.value;
+        const currentFunction = descriptor.value;
 
         let timer = 0;
 
@@ -9,8 +9,8 @@ export function debounce(ms = 500){
             
             clearInterval(timer);
 
-            timer = setTimeout(()=> metodoOriginal.apply(this, args), ms);
+            timer = setTimeout(()=> currentFunction.apply(this, args), ms);
         }
-        return descriptor
+        return descriptor;
     }
 }
